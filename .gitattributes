@@ -1,0 +1,5 @@
+.gz filter=lfs diff=lfs merge=lfs -text
+.sql filter=lfs diff=lfs merge=lfs -text
+data/hm_psql_schema_orders.sql filter=lfs diff=lfs merge=lfs -text
+data/hm_psql.sql filter=lfs diff=lfs merge=lfs -text
+data/dump/hm_pgdumpall.sql.gz filter=lfs diff=lfs merge=lfs -text

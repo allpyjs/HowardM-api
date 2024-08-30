@@ -1,0 +1,40 @@
+FROM python:3.10
+
+# ARG GIT_COMMIT
+
+WORKDIR /hm_api
+
+COPY . ./
+
+# RUN pip install poetry
+# RUN poetry config virtualenvs.create false
+# RUN poetry install --no-dev
+ARG OP_DB_URL
+ARG TIMESERIES_DB_URL
+ARG ORDERS_DB_URL
+ARG EBAY_DB_URL
+ARG TARGET_DB_URL
+ARG TRADESHOW_DB_URL
+
+
+ENV OP_DB_URL $OP_DB_URL
+ENV TIMESERIES_DB_URL $TIMESERIES_DB_URL
+ENV ORDERS_DB_URL $ORDERS_DB_URL
+ENV EBAY_DB_URL $EBAY_DB_URL
+ENV TARGET_DB_URL $TARGET_DB_URL
+ENV DEVPI_USERNAME $DEVPI_USERNAME
+ENV DEVPI_PASSWORD $DEVPI_PASSWORD
+ENV PIP_EXTRA_INDEX_URL $PIP_EXTRA_INDEX_URL
+ENV TRADESHOW_DB_URL $TRADESHOW_DB_URL
+
+RUN pip install pipenv
+RUN pipenv install --system
+
+RUN pip3 install pytest pytz bugsnag
+RUN python3.10 -m unittest discover tests
+
+ARG PORT
+ENV PORT=${PORT:-"5000"}
+# ENV GIT_COMMIT=${GIT_COMMIT}
+
+CMD gunicorn hm_api.app:app

@@ -1,0 +1,43 @@
+version: '3.3'
+services:
+  flask:
+    image: howard-miller-hekman/hm_api
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - OP_DB_URL=$OP_DB_URL
+        - ORDERS_DB_URL=$ORDERS_DB_URL
+        - EBAY_DB_URL=$EBAY_DB_URL
+        - TARGET_DB_URL=$TARGET_DB_URL
+        - TIMESERIES_DB_URL=$TIMESERIES_DB_URL
+        - TRADESHOW_DB_URL=$TRADESHOW_DB_URL
+        - DEVPI_USERNAME=$DEVPI_USERNAME
+        - DEVPI_PASSWORD=$DEVPI_PASSWORD
+        - PIP_EXTRA_INDEX_URL=$PIP_EXTRA_INDEX_URL
+    environment:
+      - PORT=5000
+      - FLASK_ENV=production 
+      - SEND_BUGSNAG_ENV=true
+      - TIMESERIES_DB_URL=$TIMESERIES_DB_URL
+      - TRADESHOW_DB_URL=$TRADESHOW_DB_URL
+      - OP_DB_URL=$OP_DB_URL
+      - ORDERS_DB_URL=$ORDERS_DB_URL
+      - EBAY_DB_URL=$EBAY_DB_URL
+      - TARGET_DB_URL=$TARGET_DB_URL
+      - FEDEX_ACCOUNT_NO=$FEDEX_ACCOUNT_NO
+      - FEDEX_CLIENT_ID=$FEDEX_CLIENT_ID
+      - FEDEX_CLIENT_SECRET=$FEDEX_CLIENT_SECRET
+      - FEDEX_API_BASE_URL=$FEDEX_API_BASE_URL
+      - SMTP_SENDER=$SMTP_SENDER
+      - SMTP_PORT=$SMTP_PORT
+      - SMTP_USER=$SMTP_USER
+      - SMTP_PASSWORD=$SMTP_PASSWORD
+      - SMTP_SENDER_NAME=$SMTP_SENDER_NAME
+      - BACK_TO_STOCK_MAIL_SUBJECT=$BACK_TO_STOCK_MAIL_SUBJECT
+
+#    network_mode: host
+    restart: always
+    ports:
+      - "5000:5000"
+
